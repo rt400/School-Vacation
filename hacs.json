@@ -1,7 +1,7 @@
 {
-  "name": "School Vacation",
-  "content_in_root": true,
-  "domains": ["sensor", "binary_sensor"],
+  "name": "Israel School Holidays",
+  "content_in_root": false,
+  "domains": ["school_holidays"],
   "country": "IL",
-  "homeassistant": "2024.5.0"
+  "homeassistant": "2024.6.0"
 }
