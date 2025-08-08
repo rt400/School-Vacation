@@ -1,14 +1,14 @@
 {
   "domain": "school_holidays",
   "name": "Israel School Holidays",
-  "version": "3.0.0",
-  "documentation": "https://github.com/rt400/School-Vacation",
-  "issue_tracker": "https://github.com/rt400/School-Vacation/issues",
-  "dependencies": [],
-  "codeowners": ["@rt400"],
-  "requirements": ["aiofiles>=0.8.0"],
-  "iot_class": "cloud_polling",
   "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/rt400/School-Vacation",
   "integration_type": "service",
-  "loggers": ["custom_components.school_holidays"]
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/rt400/School-Vacation/issues",
+  "loggers": ["custom_components.school_holidays"],
+  "requirements": ["aiofiles>=0.8.0"],
+  "version": "3.0.0",
+  "codeowners": ["@rt400"]
 }
