@@ -1,4 +1,7 @@
 {
-	"name": "School Vacation / sensor",
-	"render_readme": true
- }
+  "name": "School Vacation",
+  "content_in_root": true,
+  "domains": ["sensor", "binary_sensor"],
+  "country": "IL",
+  "homeassistant": "2024.5.0"
+}
