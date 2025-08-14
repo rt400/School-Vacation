@@ -10,5 +10,5 @@
   "issue_tracker": "https://github.com/rt400/School-Vacation/issues",
   "loggers": ["custom_components.school_holidays"],
   "requirements": ["aiofiles>=0.8.0"],
-  "version": "3.0.1"
+  "version": "3.0.2"
 }
