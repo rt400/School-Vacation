@@ -1,7 +1,7 @@
 """Constants for the Israel School Holidays integration."""
 
 DOMAIN = "school_holidays"
-VERSION = "3.0.0"
+VERSION = "3.0.1"
 
 # Configuration keys
 CONF_ELEMENTARY_SCHOOL = "elementary_school"
