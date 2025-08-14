@@ -1,110 +1,107 @@
-Israel School Holidays - Home Assistant Integration
+# Israel School Holidays - Home Assistant Integration
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
+[![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 [![GitHub release](https://img.shields.io/github/release/rt400/School-Vacation.svg)](https://github.com/rt400/School-Vacation/releases)
 [![License](https://img.shields.io/github/license/rt400/School-Vacation.svg)](LICENSE)
 
-
 A Home Assistant custom integration that tracks Israeli school vacation periods for both elementary and high schools.
 
+---
 
-Features:
+## Features
 
-• 🏫 **Separate tracking** for elementary and high school vacations
+* 🏫 **Separate tracking** for elementary and high school vacations
+* 📅 **Real-time status** with automatic updates from official data
+* 🌐 **Bilingual support** - Hebrew and English status messages
+* ⚙️ **Configurable options** through the UI
+* 🔄 **Automatic data updates** with customizable intervals
+* 📱 **HACS compatible** for easy installation and updates
 
-• 📅 **Real-time status** with automatic updates from official data
+---
 
-• 🌐 **Bilingual support** - Hebrew and English status messages
-
-• ⚙️ **Configurable options** through the UI
-
-• 🔄 **Automatic data updates** with customizable intervals
-
-• 📱 **HACS compatible** for easy installation and updates
-
-
-Why This Integration?
+## Why This Integration?
 
 In Israel, school vacation periods differ between elementary and high schools. For example:
 
-• High schools typically end on June 22nd
-
-• Elementary schools end on July 1st
-
-• High schools often have no classes on Fridays
-
-
+* High schools typically end on June 22nd
+* Elementary schools end on July 1st
+* High schools often have no classes on Fridays
 
 This integration allows you to create separate automations for each school type and get accurate vacation information.
 
+---
 
-Installation
+## Installation
 
-HACS Installation (Recommended)
+### Important for Users of the Old YAML Version
+
+If you have the old version installed via YAML, you **must remove your old configuration and restart Home Assistant** before installing the new integration. Failing to do so may cause conflicts.
+
+### HACS Installation (Recommended)
+
 1. Open HACS in Home Assistant
-2. Go to "Integrations"
-3. Click the three dots in the top right corner
-4. Select "Custom repositories"
-5. Add this repository URL: `https://github.com/rt400/School-Vacation`
-6. Select "Integration" as the category
-7. Click "Add"
-8. Find "Israel School Holidays" in HACS and install it
-9. Restart Home Assistant
+2. Go to **Integrations**
+3. Click the three dots in the top right corner → **Custom repositories**
+4. Add this repository URL: `https://github.com/rt400/School-Vacation`
+5. Select **Integration** as the category
+6. Click **Add**
+7. Find **Israel School Holidays** in HACS and install it
+8. Restart Home Assistant
 
+### Manual Installation
 
-Manual Installation
 1. Download the latest release from [GitHub releases](https://github.com/rt400/School-Vacation/releases)
 2. Extract the files to your `custom_components/school_holidays/` directory
 3. Restart Home Assistant
 
+---
 
-Configuration
+## Configuration
 
-Adding the Integration
-1. Go to **Settings** → **Devices & Services**
-2. Click **"+ Add Integration"**
-3. Search for **"Israel School Holidays"**
+### Adding the Integration
+
+1. Go to **Settings → Devices & Services**
+2. Click **+ Add Integration**
+3. Search for **Israel School Holidays**
 4. Configure your preferences:
-- **Display Language**: Choose Hebrew or English for status messages
-- **Elementary School**: Enable tracking for elementary school vacations
-- **High School**: Enable tracking for high school vacations  
-- **Friday High School**: High schools have no classes on Fridays
-- **Update Interval**: How often to check for data updates (1-168 hours)
 
+| Option             | Description                                   | Default |
+| ------------------ | --------------------------------------------- | ------- |
+| Display Language   | Language for status messages (Hebrew/English) | Hebrew  |
+| Elementary School  | Track elementary school vacations             | Enabled |
+| High School        | Track high school vacations                   | Enabled |
+| Friday High School | High schools have no classes on Fridays       | Enabled |
+| Update Interval    | How often to check for data updates (hours)   | 24      |
 
-Configuration Options
+---
 
-Option	Description	Default
-`Display Language`	Language for status messages (Hebrew/English)	Hebrew
-`Elementary School`	Track elementary school vacations	Enabled
-`High School`	Track high school vacations	Enabled
-`Friday High School`	No high school classes on Fridays	Enabled
-`Update Interval`	Data update frequency in hours	24 hours
+## Entities Created
 
-Entities Created
+### Sensors
 
-The integration creates the following entities:
+* **`sensor.school_status`** - Current school status summary
 
+  * States: "School Day", "Sabbath", "Summer Vacation", etc.
 
-Sensors
-• **`sensor.school_status`** - Current school status summary
-- States: "School Day", "Sabbath", "Summer Vacation", etc.
+### Binary Sensors
 
+* **`binary_sensor.elementary_school_vacation`** - Elementary school vacation status
 
-Binary Sensors
-• **`binary_sensor.elementary_school_vacation`** - Elementary school vacation status
-- `on`: Vacation day
-- `off`: School day
+  * `on`: Vacation day
+  * `off`: School day
 
-• **`binary_sensor.high_school_vacation`** - High school vacation status
-- `on`: Vacation day  
-- `off`: School day
+* **`binary_sensor.high_school_vacation`** - High school vacation status
 
+  * `on`: Vacation day
+  * `off`: School day
 
-Usage Examples
+---
 
-Basic Automation - School Mode
+## Usage Examples
 
+### Basic Automation - School Mode
+
+```yaml
 automation:
   - id: set_school_mode_off
     alias: "Turn Off School Mode During Vacation"
@@ -135,18 +132,20 @@ automation:
       - service: input_boolean.turn_on
         target:
           entity_id: input_boolean.school_mode
+```
 
+### Input Boolean Helper
 
-Input Boolean Helper
-
+```yaml
 input_boolean:
   school_mode:
     name: "School Mode"
     icon: mdi:school
+```
 
+### Lovelace Card Example
 
-Lovelace Card Example
-
+```yaml
 type: entities
 title: "School Status"
 entities:
@@ -154,14 +153,15 @@ entities:
     name: "Current Status"
   - entity: binary_sensor.elementary_school_vacation
     name: "Elementary Vacation"
-  - entity: binary_sensor.high_school_vacation  
+  - entity: binary_sensor.high_school_vacation
     name: "High School Vacation"
   - entity: input_boolean.school_mode
     name: "School Mode"
+```
 
+### Template Examples
 
-Template Examples
-
+```yaml
 # Check if any school is on vacation
 template:
   - binary_sensor:
@@ -179,12 +179,15 @@ template:
           {% else %}
             לימודים
           {% endif %}
+```
 
+---
 
-Advanced Configuration
+## Advanced Configuration
 
-Notifications
+### Notifications
 
+```yaml
 automation:
   - id: vacation_starts_notification
     alias: "Notify When Vacation Starts"
@@ -198,10 +201,11 @@ automation:
         data:
           title: "School Vacation Started! 🎉"
           message: "{{ states('sensor.school_status') }}"
+```
 
+### Conditional Automations
 
-Conditional Automations
-
+```yaml
 automation:
   - id: morning_routine_school_day
     alias: "Morning Routine - School Day"
@@ -221,63 +225,70 @@ automation:
           - sun
     action:
       - service: script.school_morning_routine
+```
 
+---
 
-Troubleshooting
+## Troubleshooting
 
-Common Issues
-1. **Integration not appearing**: Make sure you've restarted Home Assistant after installation
-2. **No data**: Check your internet connection - the integration fetches data from GitHub
+### Common Issues
+
+1. **Integration not appearing**: Restart Home Assistant after installation
+2. **No data**: Check your internet connection
 3. **Entities not updating**: Check the update interval in integration options
 
+### Debug Logging
 
-Debug Logging
+Add this to `configuration.yaml`:
 
-Add this to your `configuration.yaml` for debug information:
-
-
+```yaml
 logger:
   logs:
     custom_components.school_holidays: debug
+```
 
+---
 
-Data Source
+## Data Source
 
 This integration uses official Israeli school vacation data maintained at:
-https://github.com/rt400/School-Vacation/blob/master/data.json
+[https://github.com/rt400/School-Vacation/blob/master/data.json](https://github.com/rt400/School-Vacation/blob/master/data.json)
 
+Data is automatically updated and cached locally.
 
-The data is automatically updated and cached locally for reliability.
+---
 
+## Contributing
 
-Contributing
+Contributions are welcome! Submit a Pull Request on GitHub.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
 
+## License
 
-License
+MIT License – see [LICENSE](LICENSE) file.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+---
 
+## Support
 
-Support
-• 🐛 **Bug Reports**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
-• 💡 **Feature Requests**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
-• 📖 **Documentation**: [GitHub Wiki](https://github.com/rt400/School-Vacation/wiki)
+* 🐛 **Bug Reports**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
+* 💡 **Feature Requests**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
+* 📖 **Documentation**: [GitHub Wiki](https://github.com/rt400/School-Vacation/wiki)
 
+---
 
-Changelog
+## Changelog
 
-Version 3.0.0
-• Complete rewrite as a modern Home Assistant integration
-• Added HACS support
-• UI-based configuration with Config Flow
-• Bilingual support (Hebrew/English)
-• Improved reliability with local data caching
-• Separate binary sensors for each school type
+**Version 3.0.0**
 
+* Complete rewrite as a modern Home Assistant integration
+* Added HACS support
+* UI-based configuration with Config Flow
+* Bilingual support (Hebrew/English)
+* Improved reliability with local data caching
+* Separate binary sensors for each school type
 
-⸻
+---
 
-
-**Made with ❤️ for the Israeli Home Assistant community**
+**Made with ❤️ for the Israeli Home Assistant community By Yuval Mejahez**
