@@ -18,6 +18,7 @@ from .const import (
     DOMAIN,
     BINARY_SENSOR_TYPES,
     ENTITY_NAMES,
+    VERSION,
 )
 from .coordinator import SchoolHolidaysCoordinator
 
