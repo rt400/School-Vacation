@@ -95,7 +95,7 @@ class SchoolHolidaysSensor(CoordinatorEntity, SensorEntity):
             name=entity_names["device_name"],
             manufacturer="Yuval Mejahez",
             model="School Calendar Tracker",
-            sw_version="3.0.0",
+            sw_version=VERSION,
             configuration_url="https://github.com/rt400/School-Vacation",
         )
 
