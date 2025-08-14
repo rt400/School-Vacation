@@ -1,4 +1,13 @@
-"""Config flow for Israel School Holidays integration."""
+"""Config flow for Israel School Holidays integration.
+
+This module handles the configuration flow for the Israel School Holidays
+integration within Home Assistant. It manages user input, validation,
+and options for the integration setup and updates.
+
+The flow supports selecting languages, enabling vacation tracking
+for elementary and high schools, setting update intervals, and
+handling errors during configuration.
+"""
 import logging
 from typing import Any, Dict, Optional
 import voluptuous as vol
@@ -44,9 +53,22 @@ STEP_USER_DATA_SCHEMA = vol.Schema({
 
 
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
-    """Validate the user input allows us to connect.
-    
-    Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
+    """
+    Validate the user input by attempting to connect and retrieve data.
+
+    This function attempts to fetch data from the predefined DATA_URL to
+    verify connectivity and validate the data structure returned by the server.
+
+    Args:
+        hass: Home Assistant instance.
+        data: User input data from the config flow form.
+
+    Raises:
+        CannotConnect: If the integration cannot connect to the data source.
+        InvalidData: If the returned data is invalid or malformed.
+
+    Returns:
+        A dictionary with configuration info (e.g., title) if validation succeeds.
     """
     try:
         async with aiohttp.ClientSession() as session:
@@ -60,8 +82,8 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
                 if not isinstance(school_data, list) or not school_data:
                     raise InvalidData
                 
-                # Validate data structure
-                for item in school_data[:3]:  # Check first 3 items
+                # Validate structure of first few entries
+                for item in school_data[:3]:
                     if not all(key in item for key in ['START', 'END']):
                         raise InvalidData
                         
@@ -72,27 +94,31 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     except Exception:
         raise InvalidData
 
-    # Return info that you want to store in the config entry.
     return {"title": "Israel School Holidays"}
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Israel School Holidays."""
+    """Handle a config flow for Israel School Holidays integration."""
 
     VERSION = 1
 
     async def async_step_user(
         self, user_input: Optional[Dict[str, Any]] = None
     ) -> FlowResult:
-        """Handle the initial step."""
+        """
+        Handle the initial configuration step.
+
+        Displays a form to the user to collect configuration options.
+        Validates the input by attempting to fetch and verify data.
+        """
         if user_input is None:
             return self.async_show_form(
-                step_id="user", 
+                step_id="user",
                 data_schema=STEP_USER_DATA_SCHEMA,
                 description_placeholders={
                     "language_desc": "Choose the display language for entity names",
                     "elementary_desc": "Enable elementary school vacation tracking",
-                    "high_desc": "Enable high school vacation tracking", 
+                    "high_desc": "Enable high school vacation tracking",
                     "friday_desc": "High schools have no classes on Fridays",
                     "interval_desc": "Hours between data updates (1-168)"
                 }
@@ -107,41 +133,47 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         except InvalidData:
             errors["base"] = ERROR_INVALID_DATA
         except Exception:  # pylint: disable=broad-except
-            _LOGGER.exception("Unexpected exception")
+            _LOGGER.exception("Unexpected exception during config flow")
             errors["base"] = ERROR_UNKNOWN
         else:
             return self.async_create_entry(title=info["title"], data=user_input)
 
         return self.async_show_form(
-            step_id="user", 
-            data_schema=STEP_USER_DATA_SCHEMA, 
+            step_id="user",
+            data_schema=STEP_USER_DATA_SCHEMA,
             errors=errors,
             description_placeholders={
                 "language_desc": "Choose the display language for entity names",
                 "elementary_desc": "Enable elementary school vacation tracking",
                 "high_desc": "Enable high school vacation tracking",
-                "friday_desc": "High schools have no classes on Fridays", 
+                "friday_desc": "High schools have no classes on Fridays",
                 "interval_desc": "Hours between data updates (1-168)"
             }
         )
 
     @staticmethod
     def async_get_options_flow(config_entry):
-        """Create the options flow."""
+        """
+        Create and return the options flow handler for this config entry.
+        """
         return OptionsFlowHandler(config_entry)
 
 
 class OptionsFlowHandler(config_entries.OptionsFlow):
-    """Handle options flow for Israel School Holidays."""
+    """Handle options flow for Israel School Holidays integration."""
 
     def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
-        """Initialize options flow."""
+        """Initialize the options flow handler."""
         self.config_entry = config_entry
 
     async def async_step_init(
         self, user_input: Optional[Dict[str, Any]] = None
     ) -> FlowResult:
-        """Manage the options."""
+        """
+        Manage user options during the flow.
+
+        Allows updating language, vacation tracking options, and update interval.
+        """
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 
@@ -188,8 +220,8 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
 
 
 class CannotConnect(HomeAssistantError):
-    """Error to indicate we cannot connect."""
+    """Exception to indicate connection failure during validation."""
 
 
 class InvalidData(HomeAssistantError):
-    """Error to indicate there is invalid data."""
+    """Exception to indicate invalid data returned during validation."""
