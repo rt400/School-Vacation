@@ -77,19 +77,17 @@ If you have the old version installed via YAML, you **must remove your old confi
 
 ### Sensors
 
-- `` - Current school status summary
-  - States: "School Day", "Sabbath", "Summer Vacation", etc.
+- **`sensor.school_status`** – Current school status summary  
+  States: `"School Day"`, `"Sabbath"`, `"Summer Vacation"`, etc.
 
 ### Binary Sensors
 
-- `` - Elementary school vacation status
-
-  - `on`: Vacation day
+- **`binary_sensor.elementary_school_vacation`** – Elementary school vacation status  
+  - `on`: Vacation day  
   - `off`: School day
 
-- `` - High school vacation status
-
-  - `on`: Vacation day
+- **`binary_sensor.high_school_vacation`** – High school vacation status  
+  - `on`: Vacation day  
   - `off`: School day
 
 ---
