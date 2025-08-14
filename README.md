@@ -1,8 +1,6 @@
 # Israel School Holidays - Home Assistant Integration
 
-[![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
-[![GitHub release](https://img.shields.io/github/release/rt400/School-Vacation.svg)](https://github.com/rt400/School-Vacation/releases)
-[![License](https://img.shields.io/github/license/rt400/School-Vacation.svg)](LICENSE)
+&#x20;&#x20;
 
 A Home Assistant custom integration that tracks Israeli school vacation periods for both elementary and high schools.
 
@@ -10,12 +8,12 @@ A Home Assistant custom integration that tracks Israeli school vacation periods 
 
 ## Features
 
-* 🏫 **Separate tracking** for elementary and high school vacations
-* 📅 **Real-time status** with automatic updates from official data
-* 🌐 **Bilingual support** - Hebrew and English status messages
-* ⚙️ **Configurable options** through the UI
-* 🔄 **Automatic data updates** with customizable intervals
-* 📱 **HACS compatible** for easy installation and updates
+- 🏫 **Separate tracking** for elementary and high school vacations
+- 📅 **Real-time status** with automatic updates from official data
+- 🌐 **Bilingual support** - Hebrew and English status messages
+- ⚙️ **Configurable options** through the UI
+- 🔄 **Automatic data updates** with customizable intervals
+- 📱 **HACS compatible** for easy installation and updates
 
 ---
 
@@ -23,9 +21,9 @@ A Home Assistant custom integration that tracks Israeli school vacation periods 
 
 In Israel, school vacation periods differ between elementary and high schools. For example:
 
-* High schools typically end on June 22nd
-* Elementary schools end on July 1st
-* High schools often have no classes on Fridays
+- High schools typically end on June 22nd
+- Elementary schools end on July 1st
+- High schools often have no classes on Fridays
 
 This integration allows you to create separate automations for each school type and get accurate vacation information.
 
@@ -79,21 +77,20 @@ If you have the old version installed via YAML, you **must remove your old confi
 
 ### Sensors
 
-* **`sensor.school_status`** - Current school status summary
-
-  * States: "School Day", "Sabbath", "Summer Vacation", etc.
+- `` - Current school status summary
+  - States: "School Day", "Sabbath", "Summer Vacation", etc.
 
 ### Binary Sensors
 
-* **`binary_sensor.elementary_school_vacation`** - Elementary school vacation status
+- `` - Elementary school vacation status
 
-  * `on`: Vacation day
-  * `off`: School day
+  - `on`: Vacation day
+  - `off`: School day
 
-* **`binary_sensor.high_school_vacation`** - High school vacation status
+- `` - High school vacation status
 
-  * `on`: Vacation day
-  * `off`: School day
+  - `on`: Vacation day
+  - `off`: School day
 
 ---
 
@@ -251,7 +248,7 @@ logger:
 
 ## Data Source
 
-This integration uses official Israeli school vacation data maintained at:
+This integration uses official Israeli school vacation data maintained at:\
 [https://github.com/rt400/School-Vacation/blob/master/data.json](https://github.com/rt400/School-Vacation/blob/master/data.json)
 
 Data is automatically updated and cached locally.
@@ -272,9 +269,9 @@ MIT License – see [LICENSE](LICENSE) file.
 
 ## Support
 
-* 🐛 **Bug Reports**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
-* 💡 **Feature Requests**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
-* 📖 **Documentation**: [GitHub Wiki](https://github.com/rt400/School-Vacation/wiki)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
+- 💡 **Feature Requests**: [GitHub Issues](https://github.com/rt400/School-Vacation/issues)
+- 📖 **Documentation**: [GitHub Wiki](https://github.com/rt400/School-Vacation/wiki)
 
 ---
 
@@ -282,13 +279,14 @@ MIT License – see [LICENSE](LICENSE) file.
 
 **Version 3.0.0**
 
-* Complete rewrite as a modern Home Assistant integration
-* Added HACS support
-* UI-based configuration with Config Flow
-* Bilingual support (Hebrew/English)
-* Improved reliability with local data caching
-* Separate binary sensors for each school type
+- Complete rewrite as a modern Home Assistant integration
+- Added HACS support
+- UI-based configuration with Config Flow
+- Bilingual support (Hebrew/English)
+- Improved reliability with local data caching
+- Separate binary sensors for each school type
 
 ---
 
 **Made with ❤️ for the Israeli Home Assistant community By Yuval Mejahez**
+
