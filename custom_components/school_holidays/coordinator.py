@@ -119,14 +119,19 @@ class SchoolHolidaysCoordinator(DataUpdateCoordinator):
             - raw_data (list)
         """
         try:
+            _LOGGER.debug("Starting _async_update_data. Current _school_data: %s", self._school_data)
             if not self._school_data:
+                _LOGGER.debug("_school_data is empty, loading local data.")
                 await self._load_local_data()
+                _LOGGER.debug("After _load_local_data, _school_data: %s", self._school_data)
 
             if self._should_update_data():
+                _LOGGER.debug("Should update data, fetching remote data.")
                 await self._fetch_remote_data()
+                _LOGGER.debug("After _fetch_remote_data, _school_data: %s", self._school_data)
 
             status = await self._calculate_status()
-
+            _LOGGER.info("Current school status: %s", status)
             return {
                 "elementary_vacation": status.get("elementary_vacation", False),
                 "high_vacation": status.get("high_vacation", False),
@@ -136,7 +141,9 @@ class SchoolHolidaysCoordinator(DataUpdateCoordinator):
             }
 
         except Exception as err:
-            _LOGGER.error("Error updating school holidays data: %s", err)
+            import traceback
+            _LOGGER.error("Error updating school holidays data: %s\n%s", err, traceback.format_exc())
+            _LOGGER.error("_school_data at error: %s", self._school_data)
             return {
                 "elementary_vacation": False,
                 "high_vacation": False,
@@ -151,13 +158,20 @@ class SchoolHolidaysCoordinator(DataUpdateCoordinator):
         try:
             async with aiofiles.open(file_path, "r", encoding="utf-8") as file:
                 saved = json.loads(await file.read())
-                self._school_data = saved.get("data", [])
-                last_update_str = saved.get("last_update")
-                if last_update_str:
-                    self._last_update = datetime.fromisoformat(last_update_str)
-                _LOGGER.debug("Loaded school data from local file (%s)", file_path)
+                _LOGGER.debug("Loaded raw local data type: %s, repr: %r", type(saved), saved)
+                if isinstance(saved, list):
+                    self._school_data = saved
+                    self._last_update = None
+                elif isinstance(saved, dict):
+                    self._school_data = saved.get("data", [])
+                    last_update_str = saved.get("last_update")
+                    if last_update_str:
+                        self._last_update = datetime.fromisoformat(last_update_str)
+                else:
+                    _LOGGER.warning("Unexpected local data format: %s", type(saved))
+                _LOGGER.debug("Loaded school data from local file (%s): %s", file_path, self._school_data)
         except FileNotFoundError:
-            _LOGGER.debug("No local data file found.")
+            _LOGGER.warning("No local data file found.")
         except json.JSONDecodeError as err:
             _LOGGER.warning("Invalid local data format: %s", err)
 
