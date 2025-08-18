@@ -1,5 +1,9 @@
 # Israel School Holidays - Home Assistant Integration
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+[![GitHub release](https://img.shields.io/github/v/release/rt400/School-Vacation)](https://github.com/rt400/School-Vacation/releases)
+[![License](https://img.shields.io/github/license/rt400/School-Vacation)](LICENSE)
+
 &#x20;&#x20;
 
 A Home Assistant custom integration that tracks Israeli school vacation periods for both elementary and high schools.
