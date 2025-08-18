@@ -1,0 +1,54 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "School Holidays in Israel - Setup",
+        "description": "Set your preferences for tracking school holidays in Israel.",
+        "data": {
+          "language": "Display Language",
+          "elementary_school": "Track Elementary School Holidays",
+          "high_school": "Track High School Holidays",
+          "friday_high_school": "High Schools Closed on Fridays",
+          "update_interval": "Update Interval (hours)"
+        },
+        "data_description": {
+          "language": "Choose whether to display entity names in Hebrew or English.",
+          "elementary_school": "Enable tracking of elementary school holiday periods.",
+          "high_school": "Enable tracking of high school holiday periods.",
+          "friday_high_school": "In Israel, high schools typically do not operate on Fridays.",
+          "update_interval": "Set how often to check for holiday data updates (1–168 hours)."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to the school holidays service.",
+      "invalid_data": "The service returned invalid data.",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This service is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "School Holidays in Israel - Options",
+        "description": "Update your preferences for tracking school holidays in Israel.",
+        "data": {
+          "language": "Display Language",
+          "elementary_school": "Track Elementary School Holidays",
+          "high_school": "Track High School Holidays",
+          "friday_high_school": "High Schools Closed on Fridays",
+          "update_interval": "Update Interval (hours)"
+        },
+        "data_description": {
+          "language": "Choose whether to display entity names in Hebrew or English.",
+          "elementary_school": "Enable tracking of elementary school holiday periods.",
+          "high_school": "Enable tracking of high school holiday periods.",
+          "friday_high_school": "In Israel, high schools typically do not operate on Fridays.",
+          "update_interval": "Set how often to check for holiday data updates (1–168 hours)."
+        }
+      }
+    }
+  }
+}
